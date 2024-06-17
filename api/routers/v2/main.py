@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from fastapi_versioning import version
 
+from loguru import logger
 
 router = APIRouter(prefix='/main')
 
