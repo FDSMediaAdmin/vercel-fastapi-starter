@@ -1,11 +1,13 @@
 #!/bin/bash
 
 # Define the MySQL container credentials
-db_user=""
-db_password=""
+db_user="root"
+db_password="DatabasePassword"
+db_name="DatabaseName"
+mysql_host="host.docker.internal"
+mysql_port="3307"
 
-# Specify the database name and backup directory
-db_name=""
+
 backup_dir="./db/backup/$db_name"
 force_restore="false"
 
@@ -14,7 +16,7 @@ db_exists() {
   local dbname=$1
   echo "checking if db $dbname exists"
   if docker run --rm -e MYSQL_PWD="$db_password" mysql:8.0 \
-    mysql -h host.docker.internal -P 3306 -u "$db_user" "$dbname" -e "SELECT 1" 2>/dev/null; then
+    mysql -h "$mysql_host" -P "$mysql_port" -u "$db_user" "$dbname" -e "SELECT 1" 2>/dev/null; then
     return 0  # Database exists
   else
     return 1  # Database does not exist
@@ -57,7 +59,7 @@ create_database() {
 
   if [ "$db_exists_result" -eq 0 ] && [ "$can_continue_result" -eq 0 ]; then
     docker run --rm -e MYSQL_PWD="$db_password" mysql:8.0 \
-      mysql -h host.docker.internal -P 3306 -u "$db_user" -e "CREATE DATABASE $newdbname;"
+      mysql -h "$mysql_host" -P "$mysql_port" -u "$db_user" -e "CREATE DATABASE $newdbname;"
       if [ $? -eq 0 ]; then
         #echo "Database creation successful."
         echo 0
@@ -80,7 +82,7 @@ import_sql_files2() {
 
   if [ -n "$subfolder" ]; then
     docker run --rm -v "$backup_dir/$subfolder:/backup" -e MYSQL_PWD="$db_password" mysql:8.0 \
-      mysql -h host.docker.internal -P 3306 -u "$db_user" "$dbname" < /backup/*.sql
+      mysql -h "$mysql_host" -P "$mysql_port" -u "$db_user" "$dbname" < /backup/*.sql
     echo "importing from folder $subfolder into db $dbname"
   else
     echo "No valid backup folders found in $backup_dir."
@@ -101,7 +103,7 @@ import_sql_files() {
       for sql_file in "${sql_files[@]}"; do
         echo "sql_file: $sql_file"
         cat "$sql_file" | docker run --rm -i -e MYSQL_PWD="$db_password" mysql:8.0 \
-          mysql -h host.docker.internal -P 3306 -u "$db_user" "$dbname"
+          mysql -h "$mysql_host" -P "$mysql_port" -u "$db_user" "$dbname"
         echo "Imported $sql_file into $dbname."
       done
     fi

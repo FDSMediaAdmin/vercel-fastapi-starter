@@ -31,3 +31,25 @@ Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_mediu
 ## Initial set up
 alembic init migrations
 
+## Backup
+Configure the details in tools/db/backup.sh  
+Run ./tools/db/backup.sh
+
+## Restore
+Configure details in ./tools/db/restore.sh  
+If you want to restore to a new database, simply run ./tools/db/restore.sh  
+If you want to overwrite your database run ./tools/db/restore.sh -f
+
+
+# Migrations
+## Generate Migration
+1. Change entity in shared/db/entities  
+2. If you added an entity, add it to "from shared.db.entities import" in alembic/env.py   
+3. alembic revision --autogenerate -m "descriptive text"
+
+## Apply migrations
+After you generated the migration run  
+alembic  upgrade head
+Don't forget to add the migration in alembic/version to Git
+
+

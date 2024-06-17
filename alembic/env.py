@@ -7,6 +7,9 @@ from sqlalchemy import pool
 
 from alembic import context
 from sqlalchemy.ext.asyncio import AsyncEngine
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from shared.db.base_engine import Base
 from shared.db.async_engine import engine
