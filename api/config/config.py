@@ -16,6 +16,7 @@ from api.config.integrations.config import IntegrationsConfig
 class Config(BaseSettings):
     integrations: IntegrationsConfig = Field(IntegrationsConfig())
     env: str = Field(os.getenv("PYTHON_ENV", 'local'))
+    API_V1_PREFIX: str = Field('http://localhost:8000/v1_0')
 
 
 @lru_cache
