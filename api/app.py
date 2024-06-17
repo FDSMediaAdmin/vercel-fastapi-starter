@@ -1,8 +1,10 @@
-from contextlib import asynccontextmanager
-
 from fastapi import FastAPI
 
-from .routers import main
-
 app = FastAPI()
-app.include_router(main.router)
+@app.get("/")
+def home():
+    return 'Hello, World!'
+
+@app.get('/about')
+def about():
+    return 'About'
