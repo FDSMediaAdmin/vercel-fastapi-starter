@@ -15,6 +15,7 @@ from api.config.integrations.config import IntegrationsConfig
 
 class Config(BaseSettings):
     integrations: IntegrationsConfig = Field(IntegrationsConfig())
+    env: str = Field(os.getenv("PYTHON_ENV", 'local'))
 
 
 @lru_cache
