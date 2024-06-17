@@ -10,11 +10,11 @@ def configure_logging():
                 "format": "<green>{time}</green> <level>{message}</level>",
             },
             {
-                "sink": "app.log",
+                "sink": "logs/app.log",
                 "rotation": "1 MB",
                 "retention": "10 days",
-                "level": "INFO",
-                "format": "{time} {level} {message}",
+                "level": "DEBUG",
+                "format": "{time:YYYY-MM-DD at HH:mm:ss} {level} {message}",
             },
         ],
     }

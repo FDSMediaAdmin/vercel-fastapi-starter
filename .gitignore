@@ -1,0 +1,28 @@
+.idea
+
+# PyCharm files
+*.idea
+__pycharm*
+
+# VS Code files
+.vscode/
+
+# System files
+.DS_Store
+
+# Logs
+*.log
+*.log2
+
+# Python cache
+__pycache__
+
+# FastAPI files
+
+# Bytecode files
+*.pyc
+*.pyo
+
+# Editor files
+.env
+.env.local

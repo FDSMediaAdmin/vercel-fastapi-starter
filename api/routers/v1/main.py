@@ -9,7 +9,7 @@ router = APIRouter(prefix='/main')
 @router.post("/create")
 @version(1, 0)
 async def main_create():
-    print('main create called')
+    logger.debug('main create called')
 
     return {"message": "main_create: Message sent"}
 
@@ -17,6 +17,6 @@ async def main_create():
 @router.get("/read")
 @version(1, 0)
 async def main_read():
-    print('main read called')
+    logger.debug('main read called')
 
     return {"message": "main_read: Message sent"}
