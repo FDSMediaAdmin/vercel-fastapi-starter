@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  restaurant_scrape_db:
+  db_mysql:
     image: mysql:8.0
     cap_add:
       - SYS_NICE
@@ -12,13 +12,32 @@ services:
     ports:
       - '3307:3306'
     volumes:
-      - ./db/data:/var/lib/mysql
+      - ./db/mysql:/var/lib/mysql
       #- ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
     profiles:
       - e2e-test
       - local
-      - db
+      - db_mysql
+
+  db_postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: DatabaseName
+      POSTGRES_USER: DatabaseUser
+      POSTGRES_PASSWORD: DatabasePassword
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./db/postgres:/var/lib/postgresql/data
+      - "./apps/backend/scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql"
+    profiles:
+      - e2e-test
+      - local
+      - db_postgres
 
 volumes:
-  db:
+  db_mysql:
+    driver: local
+
+  db_postgres:
     driver: local
