@@ -4,8 +4,6 @@ from fastapi_versioning import version
 from loguru import logger
 from typing_extensions import Annotated
 
-from shared.decorator.rapidapi.header_checker import header_check
-
 from api.config.config import settings
 
 router = APIRouter(prefix='/main')
