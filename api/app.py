@@ -23,9 +23,9 @@ def create_app(env: str = "testing") -> FastAPI:
 
     # Configure Loguru logger
     configure_logging()
-    logger.debug('sentry dsn: {}'.format(settings.integrations.sentry.dsn))
 
-    if env in ('production', 'development'):
+    if env in ('production', 'development') and settings.integrations.sentry.use_sentry:
+        logger.debug('sentry dsn: {}'.format(settings.integrations.sentry.dsn))
         sentry_sdk.init(
             environment=env,
             dsn=settings.integrations.sentry.dsn,

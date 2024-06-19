@@ -7,3 +7,4 @@ load_dotenv()
 
 class SentryConfig(BaseModel):
     dsn: str = os.getenv("SENTRY_DSN", None)
+    use_sentry: bool = os.getenv("USE_SENTRY", False)
