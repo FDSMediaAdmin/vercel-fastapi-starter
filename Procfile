@@ -1,1 +1,1 @@
-web: uvicorn api.app:app --reload --workers 2 --host 0.0.0.0 --log-level debug
+web: uvicorn api.app:app --host 0.0.0.0 --port=${PORT:-5000}
